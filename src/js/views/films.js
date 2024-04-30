@@ -1,25 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-
 import { Context } from "../store/appContext";
-
 import { Card } from "../component/card";
 
-import "../../styles/home.css";
+export const Films = () => {
+	const { store, actions } = useContext(Context)
+	const [filmsUids, setFilmsUids] = useState([])
 
-export const Characters = () => {
-	const { store, actions } = useContext(Context);
+	useEffect(() => {
+		setFilmsUids(actions.getUID("films"))
+	},[store.species])
 
 	return (
 	<div className="text-center mt-5">
-		<h1>Characters</h1>
-		<div className="row d-flex">
-			{store.characters.map((character, index) => 
-			<div className="col-12 col-md-6 col-xl-3 my-xl-2">
-				<Card 
-				key={"c" + index+1}
-				image={`https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/characters/${index+1}.jpg`}
-				title={character.name}
+		<h1 className="text-white title">Films</h1>
+		<div className="row d-flex justify-content-center">
+			{store.films.map((film, index) => 
+			<div key={"f" + (index+1)} className="col-12 col-md-6 col-lg-4 col-xxl-3 my-xl-2">
+				<Card 	
+				image={`https://raw.githubusercontent.com/JorgeAJT/star-wars-reading-blog/master/src/img/films/f${filmsUids[index]}.jpg`}
+				episode={film.episode_id}
+				title={film.title}
+				uid={"f" + filmsUids[index]}
 				/>
 			</div>
 			)}

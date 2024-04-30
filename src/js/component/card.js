@@ -3,37 +3,45 @@ import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
-export const Card = ({ image, title, id }) => {
-
+export const Card = ({ image, title, uid, episode }) => {
     const { store, actions } = useContext(Context);
+    const [favStar, setFavStar] = useState("")
 
-    const [favStar, setFavStar] = useState("fa-regular fa-star text-warning")
-
-    const handleButton= (e) => {
-        if(e.target.className === "fa-regular fa-star text-warning") {
-            setFavStar("fa-solid fa-star text-warning") 
-            actions.setFavorites(title)
+    const handleButton= () => {
+        const isFavorite = store.favorites.some((favorite) => favorite.uid === uid)
+        if(isFavorite) {
+            actions.removeFavorite(uid)
         } 
         else {
-            setFavStar("fa-regular fa-star text-warning")
-            actions.setFavorites(title)
+            actions.addFavorite(title, uid)
         }
     }
 
     useEffect(() => {
-        handleButton
+        const isFavorite = store.favorites.some((favorite) => favorite.uid === uid)
+        if(isFavorite) {
+            setFavStar("fa-solid fa-star text-warning") 
+        } else {
+            setFavStar("fa-regular fa-star text-warning") 
+        }
     },[store.favorites])
 
 	return (
         <div className="card border-0">
             <img src={image} className="card-img-top" alt="..."/>
             <div className="card-body">
-                <h5 className="card-title text-start ms-1">{title}</h5>
+                {actions.selectCategory(uid) === "films" ? 
+                <h5 className="card-title text-start text-white ms-1">Episode {episode}: {title}</h5>
+                :
+                <h5 className="card-title text-start text-white ms-1">{title}</h5>
+                }
                 <div className="card-text">
                 </div>
                 <div className="d-flex justify-content-between">
-                <a href="#" className="btn btn-warning mt-2">Read more!</a>
-                <button onClick={handleButton} className="bg-white border-0 fs-4 fav">
+                <Link to={`/${actions.selectCategory(uid)}/${uid.slice(1)}`} className="btn btn-warning mt-2 fw-bold">
+					<span>Read more!</span>
+				</Link>
+                <button onClick={handleButton} className="border-0 fs-4 fav">
                     <i className={favStar}></i>
                 </button>
                 </div>
