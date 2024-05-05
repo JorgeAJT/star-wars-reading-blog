@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
-import normalLogo from "../../img/normal-logo.png"
+import normalLogo from "/workspaces/star-wars-reading-blog/src/img/normal-logo.png"
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
