@@ -14,7 +14,7 @@ export const Navbar = () => {
 				<div className="container-fluid d-flex align-items-center justify-content-between mb-2">
 					<i className="fa-solid fa-book-journal-whills fs-1"></i>
 					<Link to="/" className="navbar-brand my-2">
-						<img className="sw-logo" src={normalLogo}/>
+						<img className="sw-logo" src="https://raw.githubusercontent.com/JorgeAJT/star-wars-reading-blog/master/src/img/normal-logo.png"/>
 					</Link>
 					<form className="d-flex" role="search">
 							<input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
